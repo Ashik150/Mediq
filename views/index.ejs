@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>Mediq</title>
+<!--
+
+http://www.tooplate.com/view/2098-health
+
+-->
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+
+               <span class="spinner-rotate"></span>
+               
+          </div>
+     </section>
+
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-4 col-sm-5">
+                         <p>Welcome to IUT Medical Center</p>
+                    </div>
+                         
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <span class="phone-icon"><i class="fa fa-phone"></i> 01844056056</span>
+                         <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 10:00 AM - 4:00 PM (Mon-Fri)</span>
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">iutmedical@iut-dhaka.edu</a></span>
+                    </div>
+
+               </div>
+          </div>
+     </header>
+
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand" style="font-weight: bold; font-size: 24px;">MEDIQ</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll">Home</a></li>
+                         <li><a href="#about" class="smoothScroll">About Us</a></li>
+                         <li><a href="#team" class="smoothScroll">Doctors</a></li>
+                         <li><a href="#news" class="smoothScroll">News</a></li>
+                         <li><a href="#google-map" class="smoothScroll">Contact</a></li>
+                         <li><a href="/notifications">Notification</a></li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
+                              <ul class="dropdown-menu dropdown-menu-lg">
+                                   <li><a href="/uploadprescription">Upload <i class="fas fa-prescription    "></i> Prescription</a></li>
+                                   <li><a href="/bill">Billing</a></li>
+                                   <li><a href="/logout">Logout</a></li>
+                              </ul>
+                         </li>
+                         <li class="appointment-btn"><a href="#appointment">Make an appointment</a></li>
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+
+
+     <!-- HOME -->
+     <section id="home" class="slider" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <% if (typeof success !== 'undefined' && success.length > 0) { %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+          </div>
+          <div class="container">
+               <div class="row">
+
+                         <div class="owl-carousel owl-theme">
+                              <div class="item item-first">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Let's make your student life happier</h3>
+                                             <h1>Healthy Living</h1>
+                                             <a href="#team" class="section-btn btn btn-default smoothScroll">Meet Our Doctors</a>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="item item-second">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Strong health fuels successful studies.</h3>
+                                             <h1>Health transforms</h1>
+                                             <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">More About Us</a>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="item item-third">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Students thrive with enhanced health.</h3>
+                                             <h1>Student Health Benefits</h1>
+                                             <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+
+               </div>
+          </div>
+     </section>
+
+
+     <!-- ABOUT -->
+     <section id="about">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-6">
+                         <div class="about-info">
+                              <h2 class="wow fadeInUp" data-wow-delay="0.6s">Welcome to IUT Medical Center</h2>
+                              <div class="wow fadeInUp" data-wow-delay="0.8s">
+                                   <p>Students will get medical facilities according to the IUT health care policy. No Students will get medical facilities or reimbursement of bills for their medical treatment during the time of Leave/vacation, except during training programs officially arranged for them.</p>
+                                   <p>Advice from one of the IUT Physicians must be sought before hospitalization. Students must also take prior permission from one of the IUT Doctors before going to an outside medical specialist for consultation. Medical expenses will be allowed as per rules of the University.</p>
+                              </div>
+                              <figure class="profile wow fadeInUp" data-wow-delay="1s">
+                                   <img src="images/author-image.jpg" class="img-responsive" alt="">
+                                   <figcaption>
+                                        <h3>Dr.Fakharuddin Ahmed</h3>
+                                        <p>Chief Medical Officer</p>
+                                   </figcaption>
+                              </figure>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
+
+
+     <!-- TEAM -->
+     <section id="team" data-stellar-background-ratio="1">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-6">
+                         <div class="about-info">
+                              <h2 class="wow fadeInUp" data-wow-delay="0.1s">Our Doctors</h2>
+                         </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
+                              <img src="images/team-image1.webp" class="img-responsive" alt="">
+
+                                   <div class="team-info">
+                                        <h3>Dr. Fakharuddin Ahmed</h3>
+                                        <p>Chief Medical Officer</p>
+                                        <div class="team-contact-info">
+                                             <p><i class="fa fa-phone"></i>+88 01685 640650</p>
+                                             <p><i class="fa fa-envelope-o"></i> <a href="#">f_ahmed@iut-dhaka.edu</a></p>
+                                        </div>
+                                        <ul class="social-icon">
+                                             <li><a href="#" class="fa fa-linkedin-square"></a></li>
+                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                        </ul>
+                                   </div>
+
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.4s">
+                              <img src="images/team-image2.webp" class="img-responsive" alt="">
+
+                                   <div class="team-info">
+                                        <h3>Dr. Md. Ali Tareq</h3>
+                                        <p> Senior Medical Officer</p>
+                                        <div class="team-contact-info">
+                                             <p><i class="fa fa-phone"></i>+88 01716 323956</p>
+                                             <p><i class="fa fa-envelope-o"></i> <a href="#">alitareq@iut-dhaka.edu</a></p>
+                                        </div>
+                                        <ul class="social-icon">
+                                             <li><a href="#" class="fa fa-facebook-square"></a></li>
+                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                             <li><a href="#" class="fa fa-flickr"></a></li>
+                                        </ul>
+                                   </div>
+
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
+                              <img src="images/team-image3.jpg" class="img-responsive" alt="">
+
+                                   <div class="team-info">
+                                        <h3>Dr. Salma Khatun</h3>
+                                        <p>Medical Officer</p>
+                                        <div class="team-contact-info">
+                                             <p><i class="fa fa-phone"></i>+88 01917 309481</p>
+                                             <p><i class="fa fa-envelope-o"></i> <a href="#">salma@iut-dhaka.edu</a></p>
+                                        </div>
+                                        <ul class="social-icon">
+                                             <li><a href="#" class="fa fa-twitter"></a></li>
+                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                        </ul>
+                                   </div>
+
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
+
+
+     <!-- NEWS -->
+     <section id="news" data-stellar-background-ratio="2.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+                         <!-- SECTION TITLE -->
+                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
+                              <h2>Weekly Medical Bulletin</h2>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <!-- NEWS THUMB -->
+                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.4s">
+                              <a href="news-detail.html">
+                                   <img src="images/news-image1.jpg" class="img-responsive" alt="">
+                              </a>
+                              <div class="news-info">
+                                   <span>March 19, 2024</span>
+                                   <h3><a href="news-detail.html">New Ultrasound Technology May Revolutionize Respiratory Disease Diagnoses</a></h3>
+                                   <p>By evaluating sound vibrations produced by the airflow induced within the lungs and bronchial tree during normal breathing as well as those produced by the larynx during vocalizations, doctors can identify potential disease-related abnormalities within the respiratory system.</p>
+                                   <div class="author">
+                                        <img src="images/author-image.jpg" class="img-responsive" alt="">
+                                        <div class="author-info">
+                                             <h5>Jim Carlson</h5>
+                                             <p>American Institute of Physics</p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <!-- NEWS THUMB -->
+                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.6s">
+                              <a href="news-detail.html">
+                                   <img src="images/news-image2.jpg" class="img-responsive" alt="">
+                              </a>
+                              <div class="news-info">
+                                   <span>March 21, 2024</span>
+                                   <h3><a href="news-detail.html">High-resolution brain created with 3D printer</a></h3>
+                                   <p>A 3D-printed 'brain phantom' has been developed, which is modeled on the structure of brain fibers and can be imaged using a special variant of magnetic resonance imaging (dMRI). The scientific team has now shown in a study, these brain models can be used to advance research into neurodegenerative diseases such as Alzheimer's, Parkinson's and multiple sclerosis.</p>
+                                   <div class="author">
+                                        <img src="images/author-image.jpg" class="img-responsive" alt="">
+                                        <div class="author-info">
+                                             <h5>Jason Stewart</h5>
+                                             <p>Medical University of Vienna</p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <!-- NEWS THUMB -->
+                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
+                              <a href="news-detail.html">
+                                   <img src="images/news-image3.jpg" class="img-responsive" alt="">
+                              </a>
+                              <div class="news-info">
+                                   <span>April 1,2024</span>
+                                   <h3><a href="news-detail.html">Universal brain-computer interface lets people play games with just their thoughts</a></h3>
+                                   <p>Engineers have created a brain-computer interface that doesn't require calibration for each user, paving the way for widespread clinical applicability. This was not part of the new paper but a sign of where this technology could go in the future. Several people volunteered and succeeded in operating the brain-controlled robots within minutes.</p>
+                                   <div class="author">
+                                        <img src="images/author-image.jpg" class="img-responsive" alt="">
+                                        <div class="author-info">
+                                             <h5>Andrio Abero</h5>
+                                             <p>University of Texas at Austin</p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+
+     <!-- MAKE AN APPOINTMENT -->
+     <section id="appointment" data-stellar-background-ratio="3">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-6">
+                         <img src="images/appointment-image.jpg" class="img-responsive" alt="">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <!-- CONTACT FORM HERE -->
+                         <form id="appointment-form" role="form" method="post" action="/appointment">
+
+                              <!-- SECTION TITLE -->
+                              <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                                   <h2>Make an appointment</h2>
+                              </div>
+
+                              <div class="wow fadeInUp" data-wow-delay="0.8s">
+                                   <div class="col-md-6 col-sm-6">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" value="<%=name%>">
+                                   </div>
+
+                                   <div class="col-md-6 col-sm-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value="<%=email%>" readonly>
+                                   </div>
+
+                                   <div class="col-md-6 col-sm-6">
+                                        <label for="date">Select Date</label>
+                                        <input type="date" name="date" value="" class="form-control" id="appointment-date">
+                                   </div>
+
+                                   <div class="col-md-6 col-sm-6">
+                                        <label for="select">Select Doctor</label>
+                                        <select class="form-control" name="doctor">
+                                             <option>Dr. Fakharuddin Ahmed</option>
+                                             <option>Dr. Md. Ali Tareq</option>
+                                             <option>Dr. Salma Khatun</option>
+                                        </select>
+                                   </div>
+
+                                   <div class="col-md-12 col-sm-12">
+                                        <label for="id">ID</label>
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="ID"  value="<%=id%>" readonly>
+                                        <label for="telephone">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone">
+                                        <label for="Message">Additional Message</label>
+                                        <textarea class="form-control" rows="5" id="message" name="message" placeholder="Message"></textarea>
+                                        <button type="submit" class="form-control" id="cf-submit" name="submit">Submit Button</button>
+                                   </div>
+                              </div>
+                        </form>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+     <script>
+          // Get today's date
+          var today = new Date().toISOString().split('T')[0];
+          
+          // Set the minimum date for the appointment date input field to today
+          document.getElementById("appointment-date").setAttribute('min', today);
+          
+     </script>  
+
+
+     <!-- GOOGLE MAP -->
+     <section id="google-map">
+     <!-- How to change your own map point
+            1. Go to Google Maps
+            2. Click on your location point
+            3. Click "Share" and choose "Embed map" tab
+            4. Copy only URL and paste it within the src="" field below
+	-->
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3646.3339968985115!2d90.37439877380001!3d23.948626781140284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c4aa35bfa1cb%3A0xd2aed2e6ea5d4460!2sIUT%20Medical%20Center!5e0!3m2!1sen!2sbd!4v1711281327737!5m2!1sen!2sbd" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe>
+     </section>           
+
+
+     <!-- FOOTER -->
+     <footer data-stellar-background-ratio="5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="footer-thumb"> 
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contact Info</h4>
+                              <p>In case of emergency, the doctor on duty can be contacted on the Medical Centre Hotline is mentioned below: </p>
+
+                              <div class="contact-info">
+                                   <p><i class="fa fa-phone"></i> 01844056056</p>
+                                   <p><i class="fa fa-envelope-o"></i> <a href="#">iutmedical@iut-dhaka.edu</a></p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4"> 
+                         <div class="footer-thumb"> 
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Latest News</h4>
+                              <div class="latest-stories">
+                                   <div class="stories-image">
+                                        <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a>
+                                   </div>
+                                   <div class="stories-info">
+                                        <a href="#"><h5>Amazing Technology</h5></a>
+                                        <span>March 08, 2018</span>
+                                   </div>
+                              </div>
+
+                              <div class="latest-stories">
+                                   <div class="stories-image">
+                                        <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a>
+                                   </div>
+                                   <div class="stories-info">
+                                        <a href="#"><h5>New Healing Process</h5></a>
+                                        <span>February 20, 2018</span>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4"> 
+                         <div class="footer-thumb">
+                              <div class="opening-hours">
+                                   <h4 class="wow fadeInUp" data-wow-delay="0.4s">Opening Hours</h4>
+                                   <p>Monday - Friday <span>10:00 AM - 04:00 PM</span></p>
+                                   <p>Saturday-Sunday <span>Closed</span></p>
+                              </div> 
+
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+                         </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 border-top">
+                         <div class="col-md-4 col-sm-6">
+                              <div class="copyright-text"> 
+                                   <p>Copyright &copy; IUT-Medical Center
+                                   
+                                   | Design <a rel="nofollow" href="https://www.facebook.com/tooplate" target="_parent"> for SPL-2</a></p>
+                              </div>
+                         </div>
+                         <div class="col-md-6 col-sm-6">
+                              <div class="footer-link"> 
+                                   <a href="#">Laboratory Tests</a>
+                                   <a href="#">Departments</a>
+                                   <a href="#">Insurance Policy</a>
+                                   <a href="#">Careers</a>
+                              </div>
+                         </div>
+                         <div class="col-md-2 col-sm-2 text-align-center">
+                              <div class="angle-up-btn"> 
+                                  <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i class="fa fa-angle-up"></i></a>
+                              </div>
+                         </div>   
+                    </div>
+                    
+               </div>
+          </div>
+     </footer>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/jquery.sticky.js"></script>
+     <script src="js/jquery.stellar.min.js"></script>
+     <script src="js/wow.min.js"></script>
+     <script src="js/smoothscroll.js"></script>
+     <script src="js/owl.carousel.min.js"></script>
+     <script src="js/custom.js"></script>
+
+</body>
+</html>

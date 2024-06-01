@@ -1,0 +1,81 @@
+<!-- appointmentlist.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment List</title>
+    <style>
+        .appointment {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display:flexbox ;
+            justify-content: space-between;
+            align-items: center;
+            background-color: skyblue;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .accept-btn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reject-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body> 
+    <!-- make a container where there will list of appointments -->
+    <div class="container my-2"  style="background-color:white;">
+        <h1 style="text-align: center;color:slateblue;">Appointment List</h1>
+        <% appointments.forEach(appointment => { %>
+            <div class="appointment">
+                <div>
+                    <p>Appointment ID: <%= appointment.id %></p>
+                    <p>Doctor: <%= appointment.doctor %></p>
+                    <%
+                    const appointmentDate = new Date(appointment.appointment_date);
+                    // Format the date as YYYY-MM-DD
+                    const formattedDate = appointmentDate.getFullYear() + '-' + 
+                                          ('0' + (appointmentDate.getMonth() + 1)).slice(-2) + '-' + 
+                                          ('0' + appointmentDate.getDate()).slice(-2);
+                     %>
+                    <p>Date: <%= formattedDate %></p>
+                </div>
+                 <div class="buttons">
+                    <form action="/approve-appointment" method="POST">
+                        <input type="hidden" name="id" value="<%= appointment.id %>">
+                        <input type="hidden" name="unique_id" value="<%= appointment.unique_id %>">
+                        <button type="submit" class="accept-btn">Accept</button>
+                    </form>
+                    <form action="/reject-appointment" method="POST">
+                        <input type="hidden" name="id" value="<%= appointment.id %>">
+                        <input type="hidden" name="unique_id" value="<%= appointment.unique_id %>">
+                        <button type="submit" class="reject-btn">Reject</button>
+                    </form>
+                </div>
+            </div>
+         <% }); %>
+         <div class="container my-2">
+            <a href="/adminhome" class="btn btn-secondary d-block mx-auto">Back to Home</a>  
+        </div>            
+        
+    </div>
+</body>
+</html>

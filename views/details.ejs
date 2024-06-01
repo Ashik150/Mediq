@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-image: url('images/patientDetails.jpg');
+
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-size: larger;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .details {
+            margin-top: 20px;
+            padding: 130px;
+            background-color: azure;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+        }
+
+        .receipt-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 style="text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif;">Patient Details</h1>
+        <form action="/details" method="POST">
+            <label style="color:rebeccapurple;text-align: left;" for="patientId">Enter Patient ID:</label>
+            <input type="text" id="patientId" name="patientId" placeholder="Patient ID">
+            <button style="background-color: slateblue;" type="submit">Get Details</button>
+        </form>
+        <% if (patient) { %>
+            <div class="details">
+                <h3>Patient Name: <%= patient.name %>
+                </h3>
+                <h3>Email: <%= patient.email %>
+                </h3>
+                <% if (patient && patient.pres_path) { %>
+                    <p>
+                    <h3>Receipt : <a href="/<%= patient.pres_path%>" target="_blank" class="btn btn-primary">View
+                            Receipt</a></h3>
+
+                    <% } else { %>
+                        <p>No receipt found for this patient</p>
+                        <% } %>
+            </div>
+            <% } %>
+
+                <% if (error) { %>
+                    <div class="alert alert-danger">
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+
+
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
