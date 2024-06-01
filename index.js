@@ -182,8 +182,11 @@ app.post("/patientreg", checkNotAuthenticated, async (req, res) => {
         const id = req.body.id;
         const sql = "Insert into patients(name,email,password,id) values(?,?,?,?);"
         con.query(sql,[name,email,hashedPassword,id],(error,result)=>{
+            if(error){
             req.flash('error', 'Student ID already exists');
-            res.redirect("/patientlogin");
+            return res.redirect("/patientlogin");
+        }
+        res.redirect("/patientlogin");
         });
     } catch (e) {
         console.log(e);
@@ -201,7 +204,8 @@ app.post("/adminlogin", (req, res) => {
             return res.status(500).send("Internal Server Error");
         }
         if (results.length === 0) {
-            return res.status(401).send("Invalid email or password");
+            req.flash("error", "Invalid email or password");
+            return res.redirect("/adminlogin");
         }
         req.session.user = results[0];
         res.redirect("/adminhome");
@@ -221,7 +225,7 @@ app.post("/adminreg", async (req, res) => {
         con.query(sql, [name, email, password], (error, result) => {
             if (error) {
               req.flash('error', 'Email already Exists');
-              return res.redirect("/adminlogin");
+              return res.redirect("/adminreg");
             }
             res.redirect("/adminlogin");
         });
