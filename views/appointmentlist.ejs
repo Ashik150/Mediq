@@ -67,6 +67,7 @@
                     <form action="/reject-appointment" method="POST">
                         <input type="hidden" name="id" value="<%= appointment.id %>">
                         <input type="hidden" name="unique_id" value="<%= appointment.unique_id %>">
+                        <textarea name="rejection_message" placeholder="Enter rejection message" required></textarea>
                         <button type="submit" class="reject-btn">Reject</button>
                     </form>
                 </div>

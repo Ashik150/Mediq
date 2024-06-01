@@ -293,6 +293,18 @@ app.post("/approve-appointment", (req, res) => {
 app.post("/reject-appointment", (req, res) => {
     const uid = req.body.unique_id;
     const appointmentId = req.body.id;
+    const rejectMessage = req.body.rejection_message;
+    const namesql = "select name from patients where id="+""+appointmentId+""+" ";
+    con.query(namesql,(error, results) => {
+        if (error) {
+            console.error("Error fetching patient name:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+        if (results.length === 0) {
+            return res.status(404).send("Patient not found");
+        }
+        
+        const patientName = results[0].name;
     const sql = "UPDATE appointment SET status = 'rejected' WHERE unique_id = ?";
     con.query(sql, [uid], (error, result) => {
         if (error) {
@@ -300,9 +312,10 @@ app.post("/reject-appointment", (req, res) => {
             return res.status(500).send("Internal Server Error");
         }
         // Create a notification for rejection
-        createNotification(appointmentId,uid,"Your appointment has been rejected.");
+        createNotification(appointmentId,uid,`Dear ${patientName}, We regret to inform that your appointment has been rejected Because ${rejectMessage}`);
         res.redirect("/appointmentlist");
     });
+});
 });
 
 
