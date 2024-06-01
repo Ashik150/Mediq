@@ -15,6 +15,7 @@ const methodOverride = require("method-override");
 const con = require("./connection");
 const { v4: uuidv4 } = require('uuid');
 const { error } = require("console");
+const fs = require("fs");
 
 initializePassport(passport);
 
@@ -103,6 +104,34 @@ app.post("/api/uploadprescription",checkAuthenticated,(req, res) => {
       res.redirect("/uploadprescription"); // Redirect to home page or any other page after successful upload
     });
   });
+});
+
+app.post('/deletePrescription', checkAuthenticated, (req, res) => {
+    const userId = req.user.id;
+    const filename = req.body.filename;
+    const filepath = path.join(__dirname, 'uploads', filename);
+
+    // Delete file from the filesystem
+    fs.unlink(filepath, (err) => {
+        if (err) {
+            console.error('Error deleting file:', err);
+            req.flash('error', 'Error deleting file');
+            return res.redirect('/uploadprescription');
+        }
+
+        // Delete file record from the database
+        const sql = 'DELETE FROM prescriptions WHERE id = ? AND filename = ?';
+        con.query(sql, [userId, filename], (error, result) => {
+            if (error) {
+                console.error('Error deleting prescription from database:', error);
+                req.flash('error', 'Error deleting prescription from database');
+                return res.redirect('/uploadprescription');
+            }
+
+            req.flash('success', 'Prescription deleted successfully');
+            res.redirect('/uploadprescription');
+        });
+    });
 });
 
 

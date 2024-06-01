@@ -89,7 +89,11 @@
                         <td><%= prescription.filename %></td>
                         <td><%= prescription.uploaded_at %></td>
                         <td>
-                            <a href="/uploads/<%= prescription.filename %>" class="btn btn-primary" download>Download</a>
+                            <a href="/uploads/<%= prescription.filename %>" class="btn btn-primary" download>Download</a><br><br>
+                            <form action="/deletePrescription" method="post" style="display:inline;">
+                                <input type="hidden" name="filename" value="<%= prescription.filename %>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     <% }); %>
