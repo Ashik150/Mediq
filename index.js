@@ -182,7 +182,7 @@ app.post("/patientreg", checkNotAuthenticated, async (req, res) => {
         const id = req.body.id;
         const sql = "Insert into patients(name,email,password,id) values(?,?,?,?);"
         con.query(sql,[name,email,hashedPassword,id],(error,result)=>{
-            if(error) throw error;
+            req.flash('error', 'Student ID already exists');
             res.redirect("/patientlogin");
         });
     } catch (e) {
@@ -220,8 +220,8 @@ app.post("/adminreg", async (req, res) => {
         const sql = "INSERT INTO admin (name, email, password) VALUES (?, ?, ?);";
         con.query(sql, [name, email, password], (error, result) => {
             if (error) {
-                console.error(error);
-                return res.status(500).send("Internal Server Error");
+              req.flash('error', 'Email already Exists');
+              return res.redirect("/adminlogin");
             }
             res.redirect("/adminlogin");
         });
