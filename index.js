@@ -383,6 +383,33 @@ app.post("/reject-appointment", (req, res) => {
 });
 });
 
+app.post("/cancel-appointment", checkAuthenticated, (req, res) => {
+    const uid = req.body.unique_id;
+    const userId = req.user.id;
+
+    const sql = "UPDATE appointment SET status = 'cancelled' WHERE unique_id = ? AND id = ?";
+    con.query(sql, [uid, userId], (error, result) => {
+        if (error) {
+            console.error("Error cancelling appointment:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+        req.flash("success", "Appointment cancelled successfully");
+        res.redirect("/myappointments");
+    });
+});
+
+app.get('/myappointments', checkAuthenticated, (req, res) => {
+    const userId = req.user.id;
+    const sql = "SELECT doctor, appointment_date, status, unique_id FROM appointment WHERE id = ?";
+    con.query(sql, [userId], (error, results) => {
+        if (error) {
+            console.error("Error fetching appointments:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+        res.render("appointmentcancel.ejs", { appointments: results });
+    });
+});
+
 
 
 // Routes

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments</title>
+    <link rel="stylesheet" href="/path/to/bootstrap.css"> <!-- Update with your bootstrap path -->
+    <style>
+        body {
+            background-image: url('images/homeimg.jpg');
+
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        .reject-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">My Appointments</h2>
+        <% if (appointments.length === 0) { %>
+            <p>No appointments found.</p>
+        <% } else { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Appointment Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% appointments.forEach(appointment => { %>
+                    <tr>
+                        <td><%= appointment.doctor %></td>
+                        <td><%= appointment.appointment_date %></td>
+                        <td><%= appointment.status %></td>
+                        <td>
+                            <% if (appointment.status === 'approved' || appointment.status === 'pending') { %>
+                            <form action="/cancel-appointment" method="POST" style="display:inline;">
+                                <input type="hidden" name="unique_id" value="<%= appointment.unique_id %>">
+                                <button type="submit" class="reject-btn">Cancel</button>
+                            </form>
+                            <% } else { %>
+                            <span>N/A</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+    <div class="container my-2">
+        <a href="/" class="btn btn-secondary">Back to Home</a>  
+    </div>
+</body>
+</html>
