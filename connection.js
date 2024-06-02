@@ -4,7 +4,7 @@ const con=  mysql.createConnection({
     user:"root",
     password:"",    
     port:"3308",
-    database:"mediq",
+    database:"newmediq",
     charset:"utf8mb4"
 });
 

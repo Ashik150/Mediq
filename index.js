@@ -307,16 +307,52 @@ app.post("/appointment", async (req, res) => {
 app.post("/approve-appointment", (req, res) => {
     const uid = req.body.unique_id;
     const appointmentId = req.body.id;
+    const namesql = "select name from patients where id=?";
+    con.query(namesql,[appointmentId],(error, results) => {
+        if (error) {
+            console.error("Error fetching patient name:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+        if (results.length === 0) {
+            return res.status(404).send("Patient not found");
+        }
+        
+        const patientName = results[0].name;
+
+    const doctorsql = "select doctor from appointment where unique_id=?";
+    con.query(doctorsql,[uid],(error, results) => {
+        if (error) {
+            console.error("Error fetching Data:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+        if (results.length === 0) {
+            return res.status(404).send("Data not found");
+        }
+        
+        const Doctor = results[0].doctor
+        console.log(Doctor);
+
     const sql = "UPDATE appointment SET status = 'approved' WHERE unique_id = ?";
     con.query(sql, [uid], (error, result) => {
         if (error) {
             console.error(error);
             return res.status(500).send("Internal Server Error");
         }
+        let timeSlot;
+            if (Doctor === "Dr. Fakharuddin Ahmed") {
+                timeSlot = "10.00 AM to 12.00 PM.";
+            } else if(Doctor === "Dr. Salma Khatun") {
+                timeSlot = "2.30PM to 4.00 PM.";
+            }else
+            {
+                timeSlot = "4.00PM to 6.00 PM.";
+            }
         // Create a notification for approval
-        createNotification(appointmentId,uid, "Your appointment has been approved.");
+        createNotification(appointmentId,uid, `Dear ${patientName}, your appointment has been approved by ${Doctor}.Please confirm your presence between ${timeSlot}`);
         res.redirect("/appointmentlist");
     });
+});
+});
 });
 
 app.post("/reject-appointment", (req, res) => {
