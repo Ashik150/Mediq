@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Details</title>
@@ -13,14 +12,11 @@
     <style>
         body {
             background-image: url('images/patientDetails.jpg');
-
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
         }
-
-
 
         form {
             margin-bottom: 20px;
@@ -60,11 +56,10 @@
 
         .details {
             margin-top: 20px;
-            padding: 130px;
+            padding: 20px;
             background-color: azure;
             border: 1px solid #ddd;
             border-radius: 10px;
-
         }
 
         .receipt-link {
@@ -72,12 +67,25 @@
             margin-top: 10px;
             text-align: center;
         }
-    </style>
 
+        .file-buttons {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .file-button-group {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .file-button-group button {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="container">
         <h1 style="text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif;">Patient Details</h1>
         <form action="/details" method="POST">
@@ -87,39 +95,59 @@
         </form>
         <% if (patient) { %>
             <div class="details">
+                <h3>Patient ID: <%= patient.id %>
+                </h3>
                 <h3>Patient Name: <%= patient.name %>
                 </h3>
                 <h3>Email: <%= patient.email %>
                 </h3>
-                <% if (patient && patient.pres_path) { %>
-                    <p>
-                    <h3>Receipt : <a href="/<%= patient.pres_path%>" target="_blank" class="btn btn-primary">View
-                            Receipt</a></h3>
+                <h3>Phone Number: <%= patient.phone_number %>
+                </h3>
+                <% if (documents && documents.length> 0) { %>
+                    <% documents.forEach(doc=> { %>
+                        <div class="file-buttons">
+                            <div class="file-button-group">
+                                <p>File Name: <%= doc.pres_name %>
+                                </p>
 
-                    <% } else { %>
-                        <p>No receipt found for this patient</p>
-                        <% } %>
+                                <p>Date: <%= doc.uploaded_at %>
+                                </p>
+                                <form action="/<%= doc.pres_path %>" method="GET" target="_blank">
+                                    <button type="submit" class="btn btn-primary">View Prescription</button>
+                                </form>
+                                <form action="/<%= doc.pharmacy_slip_path %>" method="GET" target="_blank">
+                                    <button type="submit" class="btn btn-primary">View Receipt</button>
+                                </form>
+                                <form action="/delete-document" method="POST">
+                                    <input type="hidden" name="id" value="<%= doc.id %>">
+                                    <input type="hidden" name="pres_name" value="<%= doc.pres_name %>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        <% }); %>
+                            <% } else { %>
+                                <h3>No Prescription and Slip Files uploaded</h3>
+                                <% } %>
             </div>
-            <% } %>
-
-                <% if (error) { %>
-                    <div class="alert alert-danger">
-                        <%= error %>
-                    </div>
-                    <% } %>
-
-
-
+            <% } else { %>
+                <div class="alert alert-warning" role="alert">
+                    Patient Not Found
+                </div>
+                <% } %>
+                    <% if (messages.error && messages.error.length> 0) { %>
+                        <div class="alert alert-danger">
+                            <%= error %>
+                        </div>
+                        <% } %>
+                            <div class="container">
+                                <!-- Button to go back to admin home page -->
+                                <a href="/adminhome" class="btn btn-dark mt-3">Go Back to Admin Home</a>
+                            </div>
     </div>
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-
 </body>
 
 </html>

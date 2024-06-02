@@ -134,24 +134,40 @@ app.post('/deletePrescription', checkAuthenticated, (req, res) => {
     });
 });
 
-
-  function saveDocumentsToDB(userId, prescriptionFilename, prescriptionPath, pharmacySlipFilename, pharmacySlipPath, callback) {
-    const sql = "INSERT INTO documents (id, pres_name, pres_path, pharmacy_slip_name, pharmacy_slip_path, vis_status) VALUES (?, ?, ?, ?, ?, 'pending')";
-    con.query(sql, [userId, prescriptionFilename, prescriptionPath, pharmacySlipFilename, pharmacySlipPath], (error, result) => {
-        if (error) {
-            console.error("Error saving documents to database:", error);
-            return callback(error);
+app.post("/delete-document", (req, res) => {
+    const { pres_name } = req.body;
+    // Delete the specific document based on id and uploaded_at
+    con.query("DELETE FROM documents WHERE pres_name = ?", [pres_name], (err, result) => {
+        if (err) {
+            console.error("Error deleting document:", err);
+            req.flash('error', 'Error deleting document');
+            return res.redirect("/details");
         }
-        console.log("Documents saved to database");
-        callback(null, result.insertId); // Pass the inserted ID to the callback function
-    });
-}
 
-app.post("/api/uploadPrescriptionAndBilling",checkAuthenticated, (req, res) => {
+        req.flash('success', 'Document deleted successfully');
+        res.redirect("/details");
+    });
+});
+
+
+//   function saveDocumentsToDB(userId, prescriptionFilename, prescriptionPath, pharmacySlipFilename, pharmacySlipPath, callback) {
+//     const sql = "INSERT INTO documents (id, pres_name, pres_path, pharmacy_slip_name, pharmacy_slip_path, vis_status) VALUES (?, ?, ?, ?, ?, 'pending')";
+//     con.query(sql, [userId, prescriptionFilename, prescriptionPath, pharmacySlipFilename, pharmacySlipPath], (error, result) => {
+//         if (error) {
+//             console.error("Error saving documents to database:", error);
+//             return callback(error);
+//         }
+//         console.log("Documents saved to database");
+//         callback(null, result.insertId); // Pass the inserted ID to the callback function
+//     });
+// }
+
+app.post("/api/uploadPrescriptionAndBilling", checkAuthenticated, (req, res) => {
     const uploadMultiple = multer({
         storage: storage,
         limits: { fileSize: 1024 * 100 }, // 100KB file size limit
     }).fields([{ name: 'prescriptionFile', maxCount: 1 }, { name: 'billingFile', maxCount: 1 }]);
+
     uploadMultiple(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             if (err.code === 'LIMIT_FILE_SIZE') {
@@ -164,29 +180,34 @@ app.post("/api/uploadPrescriptionAndBilling",checkAuthenticated, (req, res) => {
             req.flash('error', 'Unknown error occurred');
             return res.redirect("/bill");
         }
+        const { id, name, email, phone, message } = req.body;
+        const prescriptionFile = req.files['prescriptionFile'] ? req.files['prescriptionFile'][0] : null;
+        const billingFile = req.files['billingFile'] ? req.files['billingFile'][0] : null;
 
-        if (!req.files || !req.files['prescriptionFile'] || !req.files['billingFile']) {
-            req.flash('error', 'Please upload both files');
-            return res.redirect("/bill");
+        if (!prescriptionFile || !billingFile) {
+            req.flash('error', 'Please upload both files.');
+            return res.redirect('/bill');
         }
 
-    // Get the uploaded file details
-    const userId = req.user.id;
-    const prescriptionFile = req.files['prescriptionFile'][0];
-    const billingFile = req.files['billingFile'][0];
+        const presName = prescriptionFile.filename;
+        const presPath = prescriptionFile.path;
+        const pharmacySlipName = billingFile.filename;
+        const pharmacySlipPath = billingFile.path;
+        const sql = 'INSERT INTO documents (id, pres_name, pres_path, pharmacy_slip_name, pharmacy_slip_path, vis_status, name, phone_number,email, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [id, presName, presPath, pharmacySlipName, pharmacySlipPath, 'Pending', name, phone, email, message];
 
-    // Save prescription and billing files to the 'documents' table
-    saveDocumentsToDB(userId, prescriptionFile.originalname, prescriptionFile.path, billingFile.originalname, billingFile.path, (err, documentId) => {
-        if (err) {
-            console.error("Error uploading documents:", err);
-            return res.status(500).send("Error uploading documents");
-        }
-        req.flash("success","Your documents have been submitted successfully!");
-        res.redirect("/bill"); // Redirect after successful upload
+        con.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error inserting into database:', err);
+                req.flash('error', 'Database error. Please try again later.');
+                return res.redirect('/bill');
+            }
+            anotherNotification(req.body.id, req.body.name, `ID ${req.body.id} has uploaded files for requesting medical billing.`);
+            req.flash('success', 'Documents uploaded successfully!');
+            res.redirect('/bill');
+        });
     });
 });
-});
-
 
 app.post("/patientlogin", checkNotAuthenticated, passport.authenticate("local", {
     successRedirect: "/",
@@ -265,23 +286,35 @@ app.post("/adminreg", async (req, res) => {
 });
 
 app.post("/details", (req, res) => {
-    const id = req.body.patientId;
-    const sql = "Select p.name,p.email,q.pres_path from patients p left join documents q on p.id=q.id where p.id=?";
+    const { patientId } = req.body;
 
-    con.query(sql, [id], (error, results) => {
-        if (error) {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-        } else {
-            if (results.length > 0) {
-                const patient = results[0]; 
-                res.render("details", { patient, error: null });
-            } else {
-                res.render("details", { patient: null, error: 'Patient not found' });
-            }
+    // Retrieve documents based on patientId from the documents table
+    con.query("SELECT * FROM documents WHERE id = ?", [patientId], (err, documents) => {
+        if (err) {
+            console.error("Error retrieving documents:", err);
+            req.flash('error', 'Error retrieving documents');
+            return res.redirect("/details");
         }
+
+        if (documents.length === 0) {
+            // No documents found for this patient
+            req.flash('error', 'No patient found with the provided ID');
+            return res.redirect("/details");
+        }
+
+        // Render the details page with patient and documents information
+        res.render("details", { patient: documents[0], documents: documents, error: req.flash("error") });
     });
 });
+
+function anotherNotification(id, name, message) {
+    const sql = "INSERT INTO adminnotify (id, name, message) VALUES (?, ?,?)";
+    con.query(sql, [id, name, message], (error, result) => {
+        if (error) {
+            console.error("Error creating notification:", error);
+        }
+    });
+}
 
 app.post("/appointment", async (req, res) => {
     try {
@@ -501,12 +534,32 @@ app.get("/appointmentlist", (req, res) => {
     });
 });
 
-app.get('/bill', (req, res) => {
-    res.render("bill_page.ejs", { success: req.flash('success'),error: req.flash('error') });
+app.get('/bill', checkAuthenticated, (req, res) => {
+    res.render("bill_page.ejs", {
+        name: req.user.name,
+        id: req.user.id,
+        email: req.user.email,
+        error: req.flash('error'),
+        success: req.flash('success'),
+
+    });
+
 });
 
+app.get("/notify", (req, res) => {
+    const mmsql = "SELECT * FROM adminnotify";
+    con.query(mmsql, (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send("Internal Server Error");
+        }
+        res.render("notify.ejs", { notifies: results });
+    });
+});
+
+
 app.get("/details", (req, res) => {
-    res.render("details", { patient: null, error: null });
+    res.render("details", { error: req.flash("error"), patient: null, documents: null });
 });
 
 app.get('/uploadprescription', checkAuthenticated, (req, res) => {
