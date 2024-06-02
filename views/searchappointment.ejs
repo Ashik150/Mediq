@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstraps.min.css">
+    <title>Appointment List</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container">
+            <!-- Navbar content here -->
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Appointment List</h1>
+        
+        <!-- Search Form -->
+        <form action="/searchappointments" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="doctor" placeholder="Search by Doctor's Name" value="<%= doctor ? doctor : '' %>">
+            </div>
+                <div class="input-group mb-2">
+                <input type="date" class="form-control" name="appointment_date" placeholder="Search by Appointment Date" value="<%= appointment_date ? appointment_date : '' %>">
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+        <!-- Appointments Table -->
+        <% if (appointments.length > 0) { %>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Doctor</th>
+                    <th>Phone Number</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% appointments.forEach(appointment => { %>
+                <tr>
+                    <td><%= appointment.id %></td>
+                    <td><%= appointment.doctor %></td>
+                    <td><%= appointment.phone_number %></td>
+                    <td><%= appointment.message %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% } else if (search) { %>
+        <div class="alert alert-warning" role="alert">
+            No approved appointments found for the doctor: <%= doctor %>
+        </div>
+        <% } %>
+    </div>
+    <div class="container my-2">
+        <a href="/adminhome" class="btn btn-secondary">Back to Home</a>  
+    </div>
+</body>
+</html>

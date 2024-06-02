@@ -390,7 +390,18 @@ app.get('/user', checkNotAuthenticated, (req, res) => {
     res.render("FPage.ejs");
 });
 
-
+app.get('/searchappointments', (req, res) => {
+    const { doctor,appointment_date } = req.query;
+    const st = 'approved';
+    const sql = "SELECT id, doctor, phone_number, message FROM appointment WHERE doctor = ? AND status = ? AND appointment_date = ?";
+    con.query(sql, [doctor, st,appointment_date], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send("Internal Server Error");
+        }
+        res.render("searchappointment.ejs", { appointments: results, search: true, doctor: doctor,appointment_date:appointment_date });
+    });
+});
 
 app.get('/', checkAuthenticated, (req, res) => {
     res.render("index.ejs", {name: req.user.name,email:req.user.email,id:req.user.id,success:req.flash("success")});
